@@ -1,0 +1,23 @@
+name: flagellar_motor_detection_project
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - typer
+  - loguru
+  - tqdm
+  - ipython
+  - jupyterlab
+  - matplotlib
+  - notebook
+  - numpy
+  - pandas
+  - scikit-learn
+  - black
+  - flake8
+  - isort
+  - pip:
+    - python-dotenv
+    - mkdocs
+    - -e .
