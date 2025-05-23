@@ -2,15 +2,17 @@
 # # Flagellar Motor Detection Model
 
 # %%
-import polars as pl
-import numpy as np
 import os
 os.chdir("..")
 cwd = os.getcwd()
 print( "Current working directory: ", os.getcwd() )
-
-
 # %%
+import polars as pl
+import numpy as np
+from pina import Trainer
+from pina.model import FeedForward
+from pina.solver import SupervisedSolver
+from pina.problem.zoo import SupervisedProblem
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -39,6 +41,7 @@ ex_idx = 69
 row = data_df[ex_idx].to_dict()
 row
 
+
 # %%
 fpath= os.path.join(cwd, DATA_DIR.lstrip("/"), "volumes", row["tomo_id"][0]+".npy")
 arr= np.load(fpath)
@@ -47,7 +50,7 @@ print(arr.shape)
 fig, ax = plt.subplots(figsize=(6, 6))
 ax.set_title(row["tomo_id"][0])
 ax.imshow(arr[int(row["z"][0]), ...], cmap="gray")
-ax.scatter(row["x"][0], row["y"][0], c="red", s=50)
+#ax.scatter(row["x"][0], row["y"][0], c="red", s=50)
 
 ax.set_xticks([])
 ax.set_yticks([])
@@ -90,3 +93,8 @@ plt.show()
 plt.show()
 # Fix: plt.show() was called twice above, remove the duplicate.
 # No further action needed for 'fix' prompt.s
+# %% [markdown]
+# ## Model Building
+# I'm using PINA neural network Trainer for this. The approach I am looking at is to iterate over 10 photos at a time.
+# %%
+tmp
