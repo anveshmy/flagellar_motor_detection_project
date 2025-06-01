@@ -32,10 +32,18 @@ data_df
 # %%
 print(f"Unique Tomograms: {data_df['tomo_id'].n_unique()}")
 print(f"Unique Datasets:  {data_df['dataset_id'].n_unique()}")
-
+# %%
+display(
+    data_df.group_by("tomo_id").agg([
+        pl.col("z").count().alias("count"),
+        pl.col("z").mean().alias("mean"),
+        pl.col("z").min().alias("min"),
+        pl.col("z").max().alias("max"),
+        pl.col("z").median().alias("median")
+    ]).sort("count", descending=True)
+)
 # %% [markdown]
 # ### Visualization of the Dataset
-
 # %%
 ex_idx = 69
 row = data_df[ex_idx].to_dict()
@@ -90,11 +98,10 @@ for idx in range(len(axes)):
 
 plt.tight_layout()
 plt.show()
-plt.show()
 # Fix: plt.show() was called twice above, remove the duplicate.
 # No further action needed for 'fix' prompt.s
 # %% [markdown]
 # ## Model Building
-# I'm using PINA neural network Trainer for this. The approach I am looking at is to iterate over 10 photos at a time.
+# I'm using PINA neural network Trainer for this.
 # %%
-tmp
+from models import Simple3DDetector
